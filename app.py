@@ -10,7 +10,7 @@ def index():
         url = request.form["url"]
         try:
             yt = YouTube(url)
-            stream = yt.streams.get_highest_resolution()
+            stream = yt.streams.filter(progressive=True, file_extension="mp4").first()
             download_path = stream.download()
             return send_file(download_path, as_attachment=True)
         except Exception as e:
